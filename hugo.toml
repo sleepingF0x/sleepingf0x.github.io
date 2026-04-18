@@ -1,0 +1,63 @@
+baseURL = 'https://sleepingf0x.github.io/'
+languageCode = 'zh-cn'
+defaultContentLanguage = 'zh-cn'
+title = 'Foxden'
+theme = 'PaperMod'
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+  series = 'series'
+
+[params]
+  env = 'production'
+  title = 'Foxden'
+  description = '一个同时写技术与生活的个人博客，记录值得在未来反复回看的经验、判断与观察。'
+  defaultTheme = 'light'
+  disableThemeToggle = true
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  ShowRssButtonInSectionTermList = true
+  ShowToc = true
+
+  [params.homeInfoParams]
+    Title = 'Foxden'
+    Content = '记录技术分享、工程实践与持续沉淀下来的方法。'
+
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/sleepingF0x'
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = 'Home'
+    url = '/'
+    weight = 10
+
+  [[menu.main]]
+    identifier = 'tech'
+    name = 'Tech'
+    url = '/tech/'
+    weight = 20
+
+  [[menu.main]]
+    identifier = 'life'
+    name = 'Life'
+    url = '/life/'
+    weight = 30
+
+  [[menu.main]]
+    identifier = 'about'
+    name = 'About'
+    url = '/about/'
+    weight = 40

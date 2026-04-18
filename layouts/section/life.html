@@ -1,0 +1,37 @@
+{{ define "main" }}
+{{ $pages := .RegularPages.ByDate.Reverse }}
+{{ $hasPages := gt (len $pages) 0 }}
+<section class="foxden-section foxden-section--life">
+  <header class="foxden-section__hero">
+    <p class="foxden-eyebrow">Section</p>
+    <h1 class="foxden-section__title">{{ .Title }}</h1>
+    <p class="foxden-section__lede">{{ with .Description }}{{ . }}{{ else }}{{ .Content | plainify }}{{ end }}</p>
+  </header>
+
+  <div class="foxden-section__grid">
+    <section class="foxden-block">
+      <p class="foxden-block__title">Notes</p>
+      <p class="foxden-block__copy">Life 会慢慢留下生活里的观察、阶段性的变化、兴趣、经验，以及那些不适合写进 Tech、却同样值得留下来的内容。</p>
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">Latest</p>
+      {{ if $hasPages }}
+      <div class="foxden-list">
+        {{ range $pages }}
+        <a class="foxden-list-card foxden-pressable" href="{{ .RelPermalink }}">
+          <div class="foxden-list-meta">
+            {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</p>
+        </a>
+        {{ end }}
+      </div>
+      {{ else }}
+      <p class="foxden-block__copy">这一栏会从一些更个人的观察开始，慢慢长出自己的语气和节奏。</p>
+      {{ end }}
+    </section>
+  </div>
+</section>
+{{ end }}

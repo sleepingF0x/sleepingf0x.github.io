@@ -1,0 +1,50 @@
+{{ define "main" }}
+{{ $pages := .RegularPages.ByDate.Reverse }}
+{{ $hasPages := gt (len $pages) 0 }}
+{{ $seriesPage := site.GetPage "/series/claude-code-guide" }}
+<section class="foxden-section foxden-section--tech">
+  <header class="foxden-section__hero">
+    <p class="foxden-eyebrow">Section</p>
+    <h1 class="foxden-section__title">{{ .Title }}</h1>
+    <p class="foxden-section__lede">{{ with .Description }}{{ . }}{{ else }}{{ .Content | plainify }}{{ end }}</p>
+  </header>
+
+  <div class="foxden-section__grid">
+    <section class="foxden-block">
+      <p class="foxden-block__title">Scope</p>
+      <p class="foxden-block__copy">这里不会只围绕某几个工具展开。凡是和构建、理解、调试、协作、自动化、系统设计、工程判断有关的内容，都可以进入 Tech。</p>
+      {{ if $seriesPage }}
+      <a class="foxden-feature foxden-pressable" href="{{ $seriesPage.RelPermalink }}">
+        <h2 class="foxden-feature__title">{{ $seriesPage.Title }}</h2>
+        <p class="foxden-feature__copy">围绕 Claude Code 的使用经验、工作流与持续拆分出来的技术主题，会在这里逐步沉淀。</p>
+      </a>
+      {{ else }}
+      <div class="foxden-feature">
+        <h2 class="foxden-feature__title">Series</h2>
+        <p class="foxden-feature__copy">这里后面会慢慢长出多个系列、专题与长期主题，而不是停留在零散文章层面。</p>
+      </div>
+      {{ end }}
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">Latest</p>
+      {{ if $hasPages }}
+      <div class="foxden-list">
+        {{ range $pages }}
+        <a class="foxden-list-card foxden-pressable" href="{{ .RelPermalink }}">
+          <div class="foxden-list-meta">
+            {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
+            {{ range first 1 (.GetTerms "series") }}<span>{{ .LinkTitle }}</span>{{ end }}
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</p>
+        </a>
+        {{ end }}
+      </div>
+      {{ else }}
+      <p class="foxden-block__copy">这里会逐步整理出文章、专题、工作流笔记与更长期的方法总结。技术内容不会只写“用了什么”，也会写“为什么这样判断”和“最后留下了什么”。</p>
+      {{ end }}
+    </section>
+  </div>
+</section>
+{{ end }}

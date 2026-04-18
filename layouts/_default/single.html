@@ -1,0 +1,46 @@
+{{ define "main" }}
+{{ $sectionName := cond (ne .Section "") (humanize .Section) "Page" }}
+<article class="foxden-single">
+  <header class="foxden-single__header">
+    <p class="foxden-single__eyebrow">{{ $sectionName }}</p>
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ with .Description }}
+    <p class="foxden-single__lede">{{ . }}</p>
+    {{ end }}
+    <div class="foxden-single__meta">
+      {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
+      <span>{{ $sectionName }}</span>
+      {{ range first 1 (.GetTerms "series") }}<span>{{ .LinkTitle }}</span>{{ end }}
+      {{ if .Param "ShowReadingTime" }}<span>{{ .ReadingTime }} min</span>{{ end }}
+    </div>
+  </header>
+
+  <div class="post-content foxden-single__content md-content">
+    {{ if not (.Param "disableAnchoredHeadings") }}
+      {{ partial "anchored_headings.html" .Content }}
+    {{ else }}
+      {{ .Content }}
+    {{ end }}
+  </div>
+
+  <footer class="foxden-single__footer">
+    {{ $seriesTerms := .GetTerms "series" }}
+    {{ if $seriesTerms }}
+    <div class="foxden-series">Series: {{ range $index, $term := $seriesTerms }}{{ if $index }}, {{ end }}<a class="foxden-pressable" href="{{ $term.RelPermalink }}">{{ $term.LinkTitle }}</a>{{ end }}</div>
+    {{ end }}
+
+    {{ $tags := .GetTerms "tags" }}
+    {{ if $tags }}
+    <ul class="post-tags">
+      {{ range $tags }}
+      <li><a class="foxden-pressable" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+      {{ end }}
+    </ul>
+    {{ end }}
+
+    {{ with .CurrentSection }}
+    <div class="foxden-backlink"><a class="foxden-pressable" href="{{ .RelPermalink }}">返回 {{ .Title }}</a></div>
+    {{ end }}
+  </footer>
+</article>
+{{ end }}

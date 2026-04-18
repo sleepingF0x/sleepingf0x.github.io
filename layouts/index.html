@@ -1,0 +1,74 @@
+{{ define "main" }}
+{{ $techPages := where site.RegularPages "Section" "tech" }}
+{{ $lifePages := where site.RegularPages "Section" "life" }}
+{{ $contentPages := where site.RegularPages "Section" "in" (slice "tech" "life") }}
+{{ $latest := first 4 ($contentPages.ByDate.Reverse) }}
+{{ $hasLatest := gt (len $latest) 0 }}
+{{ $seriesPage := site.GetPage "/series/claude-code-guide" }}
+<section class="foxden-home">
+  <header class="foxden-home__hero">
+    <p class="foxden-eyebrow">Foxden</p>
+    <h1 class="foxden-home__title">把会留下来的经验、判断与观察写下来。</h1>
+    <p class="foxden-home__lede">这是一个同时写技术与生活的个人博客。这里不追求把一切都写全，而是更在意哪些内容在一段时间以后，依然值得被重新读一遍。</p>
+  </header>
+
+  <div class="foxden-home__grid">
+    <section class="foxden-block">
+      <p class="foxden-block__title">Why write</p>
+      <p class="foxden-block__copy">有些东西在刚发生时只是零碎感受，但过一段时间回头看，它们会慢慢变成方法、判断，或者一种更稳定的做事方式。我想留下的，是这种能反复回看、也能逐渐沉淀下来的内容。</p>
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">Tech</p>
+      <p class="foxden-block__copy">这里写工具、系统、工程实践、自动化、问题分析，也可以写那些最终改变我理解技术方式的经验与方法。</p>
+      {{ if $seriesPage }}
+      <a class="foxden-feature foxden-pressable" href="{{ $seriesPage.RelPermalink }}">
+        <h2 class="foxden-feature__title">Claude-Code-Guide</h2>
+        <p class="foxden-feature__copy">围绕 Claude Code 的使用经验、工作流与长期会继续拆开的技术主题，都会从这里逐步沉淀。</p>
+      </a>
+      {{ else }}
+      <div class="foxden-feature">
+        <h2 class="foxden-feature__title">Claude-Code-Guide</h2>
+        <p class="foxden-feature__copy">它会作为 Tech 里的一个系列继续展开，后面也会有别的系列与主题慢慢长出来。</p>
+      </div>
+      {{ end }}
+      {{ if eq (len $techPages) 0 }}
+      <p class="foxden-block__copy"><a class="foxden-inline-link foxden-pressable" href="{{ "/tech/" | relURL }}">先去 Tech 看看这个栏目会写什么</a>。</p>
+      {{ end }}
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">Life</p>
+      <p class="foxden-block__copy">这里会留下生活里的观察、阶段性的变化、日常经验，以及那些不属于技术、却同样会在以后留下痕迹的内容。</p>
+      {{ if eq (len $lifePages) 0 }}
+      <p class="foxden-block__copy"><a class="foxden-inline-link foxden-pressable" href="{{ "/life/" | relURL }}">去 Life 看看这部分会往哪里长</a>。</p>
+      {{ end }}
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">Latest</p>
+      {{ if $hasLatest }}
+      <div class="foxden-list">
+        {{ range $latest }}
+        <a class="foxden-list-card foxden-pressable" href="{{ .RelPermalink }}">
+          <div class="foxden-list-meta">
+            {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
+            {{ with .CurrentSection }}<span>{{ .Title }}</span>{{ end }}
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</p>
+        </a>
+        {{ end }}
+      </div>
+      {{ else }}
+      <p class="foxden-block__copy">现在文章还不多，但站点的两条主线已经明确：一条继续写技术，一条慢慢写生活。后面的内容会沿着这两个方向自然长出来。</p>
+      {{ end }}
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">About</p>
+      <p class="foxden-block__copy">如果你想知道这个站点背后是谁、为什么会开始写这些内容，可以去 <a class="foxden-inline-link foxden-pressable" href="{{ "/about/" | relURL }}">About</a> 看看。</p>
+    </section>
+  </div>
+</section>
+{{ end }}
