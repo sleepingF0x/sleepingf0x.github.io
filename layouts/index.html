@@ -4,7 +4,7 @@
 {{ $contentPages := where site.RegularPages "Section" "in" (slice "tech" "life") }}
 {{ $latest := first 4 ($contentPages.ByDate.Reverse) }}
 {{ $hasLatest := gt (len $latest) 0 }}
-{{ $seriesPage := site.GetPage "/series/claude-code-guide" }}
+{{ $claudeCodeGuidePage := site.GetPage "/series/claude-code-guide" }}
 <section class="foxden-home">
   <header class="foxden-home__hero">
     <p class="foxden-eyebrow">Foxden</p>
@@ -21,17 +21,28 @@
     <section class="foxden-block">
       <p class="foxden-block__title">Tech</p>
       <p class="foxden-block__copy">这里写工具、系统、工程实践、自动化、问题分析，也可以写那些最终改变我理解技术方式的经验与方法。</p>
-      {{ if $seriesPage }}
-      <a class="foxden-feature foxden-pressable" href="{{ $seriesPage.RelPermalink }}">
-        <h2 class="foxden-feature__title">Claude-Code-Guide</h2>
-        <p class="foxden-feature__copy">围绕 Claude Code 的使用经验、工作流与长期会继续拆开的技术主题，都会从这里逐步沉淀。</p>
-      </a>
-      {{ else }}
-      <div class="foxden-feature">
-        <h2 class="foxden-feature__title">Claude-Code-Guide</h2>
-        <p class="foxden-feature__copy">它会作为 Tech 里的一个系列继续展开，后面也会有别的系列与主题慢慢长出来。</p>
+      <div class="foxden-series-list">
+        <p class="foxden-series-list__title">Series</p>
+        {{ if $claudeCodeGuidePage }}
+        <a class="foxden-series-card foxden-pressable" href="{{ $claudeCodeGuidePage.RelPermalink }}">
+          <div class="foxden-series-card__meta">
+            <span class="foxden-series-card__index">01</span>
+            <span class="foxden-series-card__status">持续更新</span>
+          </div>
+          <h2 class="foxden-series-card__name">Claude-Code-Guide</h2>
+          <p class="foxden-series-card__desc">围绕 Claude Code 的使用经验、工作流、常用 skills 与实践判断。</p>
+        </a>
+        {{ else }}
+        <div class="foxden-series-card">
+          <div class="foxden-series-card__meta">
+            <span class="foxden-series-card__index">01</span>
+            <span class="foxden-series-card__status">持续更新</span>
+          </div>
+          <h2 class="foxden-series-card__name">Claude-Code-Guide</h2>
+          <p class="foxden-series-card__desc">围绕 Claude Code 的使用经验、工作流、常用 skills 与实践判断。</p>
+        </div>
+        {{ end }}
       </div>
-      {{ end }}
       {{ if eq (len $techPages) 0 }}
       <p class="foxden-block__copy"><a class="foxden-inline-link foxden-pressable" href="{{ "/tech/" | relURL }}">先去 Tech 看看这个栏目会写什么</a>。</p>
       {{ end }}

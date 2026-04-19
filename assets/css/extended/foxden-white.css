@@ -259,6 +259,89 @@ p,
   color: var(--secondary);
 }
 
+.foxden-feature-group {
+  display: grid;
+  gap: 0;
+}
+
+.foxden-series-list {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.foxden-series-list__title {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  font-family: var(--foxden-body-font);
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.foxden-series-card {
+  display: block;
+  padding: 18px 0;
+  color: inherit;
+  text-decoration: none;
+  transition-property: transform, color;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.foxden-series-card + .foxden-series-card {
+  border-top: 1px solid var(--border);
+}
+
+.foxden-series-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--tertiary);
+}
+
+.foxden-series-card__index,
+.foxden-series-card__status {
+  display: inline-block;
+}
+
+.foxden-series-card__name {
+  margin: 0;
+  font-family: var(--foxden-title-font);
+  font-size: 1.45rem;
+  line-height: 1.15;
+}
+
+.foxden-series-card__desc {
+  max-width: 620px;
+  margin: 8px 0 0;
+  color: var(--secondary);
+}
+
+@media (hover: hover) {
+  .foxden-series-card:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.foxden-series-card:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 640px) {
+  .foxden-series-card__meta {
+    gap: 12px;
+  }
+
+  .foxden-series-card__name {
+    font-size: 1.22rem;
+  }
+}
+
 .foxden-feature {
   display: block;
   padding: 24px 0;

@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $pages := .RegularPages.ByDate.Reverse }}
 {{ $hasPages := gt (len $pages) 0 }}
-{{ $seriesPage := site.GetPage "/series/claude-code-guide" }}
+{{ $claudeCodeGuidePage := site.GetPage "/series/claude-code-guide" }}
 <section class="foxden-section foxden-section--tech">
   <header class="foxden-section__hero">
     <p class="foxden-eyebrow">Section</p>
@@ -13,17 +13,28 @@
     <section class="foxden-block">
       <p class="foxden-block__title">Scope</p>
       <p class="foxden-block__copy">这里不会只围绕某几个工具展开。凡是和构建、理解、调试、协作、自动化、系统设计、工程判断有关的内容，都可以进入 Tech。</p>
-      {{ if $seriesPage }}
-      <a class="foxden-feature foxden-pressable" href="{{ $seriesPage.RelPermalink }}">
-        <h2 class="foxden-feature__title">{{ $seriesPage.Title }}</h2>
-        <p class="foxden-feature__copy">围绕 Claude Code 的使用经验、工作流与持续拆分出来的技术主题，会在这里逐步沉淀。</p>
-      </a>
-      {{ else }}
-      <div class="foxden-feature">
-        <h2 class="foxden-feature__title">Series</h2>
-        <p class="foxden-feature__copy">这里后面会慢慢长出多个系列、专题与长期主题，而不是停留在零散文章层面。</p>
+      <div class="foxden-series-list">
+        <p class="foxden-series-list__title">Series</p>
+        {{ if $claudeCodeGuidePage }}
+        <a class="foxden-series-card foxden-pressable" href="{{ $claudeCodeGuidePage.RelPermalink }}">
+          <div class="foxden-series-card__meta">
+            <span class="foxden-series-card__index">01</span>
+            <span class="foxden-series-card__status">持续更新</span>
+          </div>
+          <h2 class="foxden-series-card__name">{{ $claudeCodeGuidePage.Title }}</h2>
+          <p class="foxden-series-card__desc">围绕 Claude Code 的使用经验、工作流、常用 skills 与实践判断。</p>
+        </a>
+        {{ else }}
+        <div class="foxden-series-card">
+          <div class="foxden-series-card__meta">
+            <span class="foxden-series-card__index">01</span>
+            <span class="foxden-series-card__status">持续更新</span>
+          </div>
+          <h2 class="foxden-series-card__name">Claude-Code-Guide</h2>
+          <p class="foxden-series-card__desc">围绕 Claude Code 的使用经验、工作流、常用 skills 与实践判断。</p>
+        </div>
+        {{ end }}
       </div>
-      {{ end }}
     </section>
 
     <section class="foxden-block">
