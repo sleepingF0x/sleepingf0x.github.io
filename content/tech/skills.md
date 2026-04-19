@@ -1,5 +1,5 @@
 ---
-title: "Skills：最近常用的几个"
+title: "Skills：最近常用的几个skill"
 date: 2026-04-19T02:20:00+08:00
 draft: false
 description: "这里记录最近常用的几个skill"
