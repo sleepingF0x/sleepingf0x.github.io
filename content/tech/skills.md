@@ -38,11 +38,11 @@ GitHub：`https://github.com/obra/superpowers`
 - `verification-before-completion`：准备宣告完成前，先确认是不是真的完成了
 - `finishing-a-development-branch`：整条开发分支收尾，统一做测试和清理
 
-```bash
-/brainstorming 我想给博客加站内搜索，先把方案讲清楚
-/writing-plans 基于刚才确认的方案，拆成可执行步骤
-/test-driven-development 为这个功能先写失败测试
-/systematic-debugging 首页构建时报 RSS 错，先查根因
-/requesting-code-review review 当前改动
-/verification-before-completion 确认这个问题是不是真的修好了
-```
+比如可以这样直接用：
+
+- `/brainstorming 我想给博客加站内搜索，先把方案讲清楚`
+- `/writing-plans 基于刚才确认的方案，拆成可执行步骤`
+- `/test-driven-development 为这个功能先写失败测试`
+- `/systematic-debugging 首页构建时报 RSS 错，先查根因`
+- `/requesting-code-review review 当前改动`
+- `/verification-before-completion 确认这个问题是不是真的修好了`
