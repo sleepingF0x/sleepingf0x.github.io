@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "opennews": {
+      "source": "6551Team/opennews-mcp",
+      "sourceType": "github",
+      "computedHash": "a4946758f1a7c7f63246325cfdf94a6b5f014aebdcf61d44cd9d350136ee1431"
+    },
+    "opentwitter": {
+      "source": "6551Team/opentwitter-mcp",
+      "sourceType": "github",
+      "computedHash": "5f04ae3cf1e1d90a48121478ca7b80c65e4de27788f205ab64d71627598165fb"
+    }
+  }
+}
