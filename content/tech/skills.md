@@ -85,3 +85,51 @@ GitHub：`https://github.com/obra/superpowers`
 - `/verification-before-completion 确认这个问题是不是真的修好了`
 - `/finishing-a-development-branch 当前分支做最终收尾`
 - `/writing-skills 帮我写一个新的 skill`
+
+## mattpocock/skills
+
+Matt Pocock 是 Total TypeScript 的作者，这个仓库整理的是他自己日常用的 Claude skills。整体风格很工程化，不追求让 agent 更会“发挥”，而是给它加流程：先把问题问清楚，再设计接口、拆 issue、写测试、做重构计划，尽量避免一上来就改代码。
+
+GitHub：`https://github.com/mattpocock/skills`
+
+### Planning & Design
+
+- `to-prd`：把当前对话和代码库理解整理成 PRD，并创建 GitHub issue。适合需求已经聊得差不多，但还没有沉淀成正式规格的时候用。
+- `to-issues`：把 PRD、计划或规格拆成多个可独立领取的 GitHub issues。它强调纵向切片，每个 issue 都应该能独立验证，而不是按数据库、API、UI 这种横向层拆。
+- `grill-me`：让 Claude 反复追问你的方案，直到关键边界和取舍都讲清楚。适合方案还不稳、担心漏掉分支条件的时候用。
+- `design-an-interface`：为一个模块生成多种明显不同的接口设计，再比较取舍。适合 API、模块边界、service 接口还没定型的时候用。
+- `request-refactor-plan`：通过访谈生成一个重构计划，并拆成很小的提交步骤。适合不想让 Claude 直接大改，而是先把重构范围和验证方式讲清楚。
+- `domain-model`：围绕领域模型拷问方案，并把确定下来的术语和决策写进 `CONTEXT.md` 或 ADR。适合业务概念复杂、术语容易混乱的项目。
+
+### Development
+
+- `tdd`：按 red、green、refactor 的节奏开发功能或修 bug。它不鼓励一次写完所有测试，而是一次一个行为，一条测试推动一小段实现。
+- `triage-issue`：调查 bug 根因，并创建带 TDD 修复计划的 GitHub issue。适合先查清楚问题，再把修复交给人或 agent 执行。
+- `improve-codebase-architecture`：找代码库里可以“加深”的模块，也就是通过收窄接口、隐藏复杂度来改善模块边界。适合做架构梳理、降低耦合、改善可测试性。
+- `migrate-to-shoehorn`：把 TypeScript 测试里的 `as` 类型断言迁移到 `@total-typescript/shoehorn`。它只适合测试代码，主要解决测试数据很大但只关心少数字段的问题。
+- `scaffold-exercises`：为课程练习创建目录结构、题目、答案和讲解文件。这个比较贴作者自己的课程项目，通用性不如前面几个。
+
+### Tooling & Workflow
+
+- `github-triage`：用 label 状态机管理 GitHub issues，比如 `needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`。适合开源项目或 issue 流量比较大的项目。
+- `qa`：开启一个 QA 会话，用户边测试边描述问题，Claude 负责轻量追问、整理上下文、创建 GitHub issue。适合把口头反馈快速沉淀成可执行任务。
+- `setup-pre-commit`：给 JS/TS 项目配置 Husky、lint-staged、Prettier、typecheck 和 test。适合项目还没有提交前检查机制的时候用。
+- `git-guardrails-claude-code`：给 Claude Code 配 PreToolUse hook，阻止危险 git 命令，比如 `git push`、`git reset --hard`、`git clean -f`、`git branch -D`。适合想给 agent 加本地安全护栏的时候用。
+
+### Writing & Knowledge
+
+- `edit-article`：编辑文章，先按标题拆分结构，再逐段改清晰度和表达。它关注信息依赖顺序，避免文章前面用了后面才解释的概念。
+- `ubiquitous-language`：从当前对话里提取 DDD 风格的统一语言表，并保存成 `UBIQUITOUS_LANGUAGE.md`。适合把业务术语、别名和概念关系固定下来。
+- `write-a-skill`：创建新的 Claude skill。它会要求写清楚触发场景、目录结构、是否需要脚本、哪些内容应该拆到 reference 文件里。
+- `obsidian-vault`：管理作者自己的 Obsidian vault，包括搜索笔记、创建笔记、维护 wikilinks 和 index notes。默认路径很个人化，真要用需要改成自己的 vault。
+
+### Communication & Navigation
+
+- `caveman`：极简沟通模式。触发后 Claude 会去掉客套、铺垫和冗余解释，只保留技术信息，适合想减少上下文消耗或只要结论的时候用。
+- `zoom-out`：让 Claude 从当前代码细节里退出来，先画模块地图、调用关系和上下文。适合不熟某块代码，或者 Claude 钻得太细时用。
+
+### 我会优先装的几个
+
+日常开发里，最值得先装的是 `grill-me`、`design-an-interface`、`tdd`、`to-prd`、`to-issues`、`triage-issue` 和 `zoom-out`。这几个覆盖了需求澄清、接口设计、测试驱动、任务拆分和陌生代码理解，使用频率会比较高。
+
+如果在维护开源项目，再考虑 `github-triage` 和 `qa`。如果项目需要更强的本地约束，可以加 `setup-pre-commit` 和 `git-guardrails-claude-code`。剩下几个更偏作者自己的工作流，按场景安装就行。
