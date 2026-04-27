@@ -322,6 +322,17 @@ p,
   color: #b02a37 !important;
 }
 
+.md-content code.language-bash span[style*="#e6db74"],
+.md-content code.language-sh span[style*="#e6db74"],
+.md-content code.language-shell span[style*="#e6db74"],
+.md-content code.language-zsh span[style*="#e6db74"],
+.post-content code.language-bash span[style*="#e6db74"],
+.post-content code.language-sh span[style*="#e6db74"],
+.post-content code.language-shell span[style*="#e6db74"],
+.post-content code.language-zsh span[style*="#e6db74"] {
+  color: #1f1f1d !important;
+}
+
 .post-entry,
 .first-entry {
   position: relative;
@@ -596,8 +607,81 @@ p,
   font-variant-numeric: tabular-nums;
 }
 
+.foxden-single__body {
+  display: block;
+}
+
 .foxden-single__content {
   padding: 36px 0 10px;
+}
+
+.foxden-single__toc {
+  display: none;
+  position: sticky;
+  top: 96px;
+  max-height: calc(100vh - 128px);
+  overflow: auto;
+  padding-top: 38px;
+  font-size: 13px;
+}
+
+.foxden-single__toc .toc {
+  margin: 0;
+  padding: 0 0 0 18px;
+  border-left: 1px solid var(--border);
+}
+
+.foxden-single__toc .toc summary {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--tertiary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.foxden-single__toc .toc summary:focus-visible {
+  outline: 2px solid var(--foxden-accent);
+  outline-offset: 4px;
+}
+
+.foxden-single__toc .toc summary::-webkit-details-marker {
+  display: none;
+}
+
+.foxden-single__toc .toc .inner {
+  margin: 0;
+  padding: 0;
+}
+
+.foxden-single__toc .toc ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.foxden-single__toc .toc ul ul {
+  padding-left: 12px;
+}
+
+.foxden-single__toc .toc li {
+  margin: 0;
+  padding: 4px 0;
+}
+
+.foxden-single__toc .toc a {
+  color: var(--secondary);
+  text-decoration: none;
+  line-height: 1.45;
+}
+
+.foxden-single__toc .toc a:hover,
+.foxden-single__toc .toc a:focus-visible {
+  color: var(--foxden-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .foxden-single__content h2,
@@ -661,6 +745,27 @@ p,
   box-shadow: var(--foxden-shadow);
 }
 
+@media (min-width: 1200px) {
+  .main {
+    max-width: 1120px;
+  }
+
+  .foxden-single {
+    max-width: 1080px;
+  }
+
+  .foxden-single__body {
+    display: grid;
+    grid-template-columns: minmax(0, 760px) 220px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .foxden-single__toc {
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   .main,
   .header .header-nav,
@@ -673,6 +778,18 @@ p,
   .foxden-section,
   .foxden-single {
     padding-top: 24px;
+  }
+
+  .foxden-single {
+    max-width: 760px;
+  }
+
+  .foxden-single__body {
+    display: block;
+  }
+
+  .foxden-single__toc {
+    display: none;
   }
 
   .foxden-home__hero,

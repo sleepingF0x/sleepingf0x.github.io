@@ -15,11 +15,20 @@
     </div>
   </header>
 
-  <div class="post-content foxden-single__content md-content">
-    {{ if not (.Param "disableAnchoredHeadings") }}
-      {{ partial "anchored_headings.html" .Content }}
-    {{ else }}
-      {{ .Content }}
+  <div class="foxden-single__body">
+    <div class="post-content foxden-single__content md-content">
+      {{ if not (.Param "disableAnchoredHeadings") }}
+        {{ partial "anchored_headings.html" .Content }}
+      {{ else }}
+        {{ .Content }}
+      {{ end }}
+    </div>
+
+    {{ $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content }}
+    {{ if and (.Param "ShowToc") (gt (len $headers) 0) }}
+    <aside class="foxden-single__toc" aria-label="Article outline">
+      {{ partial "toc.html" . }}
+    </aside>
     {{ end }}
   </div>
 

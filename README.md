@@ -1,33 +1,48 @@
 # Foxden
 
-个人博客，第一版信息架构采用 `Home / Tech / About`。技术内容统一收敛到 `Tech`，其中 `Claude-Code-Guide` 作为一个系列/专题继续沉淀。
+Hi, I'm Ethan.
 
-## 本地开发
+I write about software engineering, AI-assisted development, personal knowledge systems, and small observations from daily life.
 
-启动本地开发服务器：
+Foxden is my personal blog. It collects technical notes, workflow experiments, reading notes, and life observations that are worth returning to later.
+
+## What I write about
+
+- AI-assisted development and workflows
+- Engineering practice, tools, and system design
+- Personal knowledge management
+- Books, people, and everyday observations
+
+## Site
+
+- URL: https://foxden.vault2049.xyz/
+- Tech stack: Hugo + PaperMod
+- Main sections: Home / Tech / Life / About
+
+## Local development
+
+Start the local development server:
 
 ```bash
 hugo server -D
 ```
 
-访问：`http://localhost:1313`
+Visit: `http://localhost:1313`
 
-## 新建文章
+## Create a new post
 
 ```bash
 hugo new tech/your-post-slug.md
 ```
 
-写完后把 front matter 里的 `draft: true` 改为 `false`。
+After writing, set `draft: false` in the front matter.
 
-如果文章属于某个专题，可以补充 `series` 字段，例如：
+If the post belongs to a series, add a `series` field:
 
 ```toml
 series = ["Claude-Code-Guide"]
 ```
 
-## 部署
+## Deployment
 
-推送到 `main` 后，GitHub Actions 会自动构建并发布到 GitHub Pages。
-
-最终地址：`https://sleepingf0x.github.io`
+Pushing to `main` triggers GitHub Actions to build and publish the site to GitHub Pages.
