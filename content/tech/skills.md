@@ -86,6 +86,12 @@ GitHub：`https://github.com/obra/superpowers`
 - `/finishing-a-development-branch 当前分支做最终收尾`
 - `/writing-skills 帮我写一个新的 skill`
 
+### workflow
+
+- `/requesting-code-review 描述你的 GOAL，请仔细审核这份代码`
+- `/systematic-debugging 找到问题的根因，尝试定位到具体代码。思考解决方案，再列出改进plan，写完后交给subagent再次检查，直到合格为止`
+
+
 ## mattpocock/skills
 
 Matt Pocock 是 Total TypeScript 的作者，这个仓库整理的是他自己日常用的 Claude skills。整体风格很工程化，不追求让 agent 更会“发挥”，而是给它加流程：先把问题问清楚，再设计接口、拆 issue、写测试、做重构计划，尽量避免一上来就改代码。
