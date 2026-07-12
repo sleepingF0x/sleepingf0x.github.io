@@ -17,14 +17,44 @@ agent workflow 的做法很简单：把角色拆开。
 
 Claude 负责把模糊需求拷问成 spec 和可执行 issue，实现时负责钉死 spec、复审和验证；写代码的活交给 Codex 的 gpt-5.6-sol，验收判定也由它在另一个干净线程里做。两个模型之间不靠聊天记录交接，只靠两样东西：GitHub Issues 和仓库里落盘的文档。
 
+整条链画出来是这样：
+
 ```text
-Claude：需求拷问 -> spec -> 拆 tickets
-  ↓
-GitHub Issues + repo docs
-  ↓
-Claude 钉 spec、选推理档 -> Codex (gpt-5.6-sol) 实现 -> Claude 验证 + review -> commit
-  ↓
-新会话验收：Codex 逐条判定 -> Claude push + close
+入口（三选一）
+  一般需求   →  /grill-with-docs   烤问对齐，术语进 CONTEXT.md，决策进 ADR
+  雾大的活   →  /wayfinder         在 tracker 上建图，多会话逐张解雾
+  外部 issue →  /triage            状态机分诊，产出 ready-for-agent
+                     │
+Claude：把想清楚的东西固化成规格
+  /to-spec      →  spec issue：目标、非目标、验收标准、测试 seam
+  /to-tickets   →  垂直切片 tickets，每张标 blocked-by
+                     │
+                     ├─◄  交接面：GitHub Issues + repo docs
+                     │    不是聊天记录。所以每一步都能换会话、换模型
+                     ▼
+/implement-codex #N
+  Claude   钉死 spec，在约定 seam 写红测，选推理档
+             │   brief：issue 原文 + 红测 + 仓库约定 + 验证命令
+             ▼
+  Codex    冷启动线程：写代码、跑测试。不 commit、不 push
+             │   工作树 diff，这是它唯一的输出
+             ▼
+  Claude   不信它的汇报，自己跑 typecheck 和全量测试
+           /code-review 审 diff        ①  Claude 审 Codex 的代码
+           commit 引用 #N。到此为止不 push、不关单
+                     │
+                     ▼
+/accept-issue #N（硬规则：必须新会话，不能是实现会话）
+  Codex    法官：跑 verify 入口，用测试没用过的输入实测行为，
+           逐条裁决并附上命令和输出    ②  Codex 审 Claude 的 spec
+  Claude   书记员：只查形式。缺证据就打回，不脑补，不推翻裁决
+             │
+             ├─ 通过  →  /land-issue #N：push、留验收摘要、close
+             └─ 不通过 →  写回 issue 保持 open，交给下一个冷启动会话
+
+跨模型检查是双向的：
+  ①  code-review 阶段，Claude 审 Codex 写的代码
+  ②  验收阶段，Codex 审 Claude 写的 spec
 ```
 
 下面提到的 skill 我都放在这个仓库里，多台机器之间同步用：`https://github.com/sleepingF0x/skills`
@@ -41,7 +71,7 @@ Claude 钉 spec、选推理档 -> Codex (gpt-5.6-sol) 实现 -> Claude 验证 + 
 
 agent workflow 里故意让 Codex 冷启动。每个 issue 都开一个全新线程，它能看到的只有 Claude 打包给它的 brief：issue 原文、红测、仓库约定、验证命令。这样可以逼出一个很朴素的事实：如果一个实现者必须依赖原来那段聊天记忆才能做对，说明任务本身还没有写清楚。
 
-这不是为了增加仪式感，而是为了把失败归因变清楚。
+冷启动是为了把失败归因变清楚。
 
 - Codex 做不出来，优先怀疑 issue 不够 AFK-ready。
 - 测试绿但验收不通过，说明验收标准或行为验证还不够具体。
@@ -77,7 +107,7 @@ grill-with-docs -> to-spec -> to-tickets -> implement
 
 wayfinder 是规划不是执行。地图的完成标志是到终点的路完全清晰、没有待决问题，这时候把结论交给 to-spec 固化成 spec，进入下面几节的流程。中途手痒想直接开写，多半就是该收图交棒的信号。
 
-用不用它，我的标准是两个条件都满足：多会话，多雾。已经拆清楚的一串 issue 不需要它，直接 implement；但“要不要为一个每天只有几美元的市场上付费基础设施”这种问题，牵扯调研、开户、成本核算，甚至可能中途改写终点，就值得先建图。
+用不用它，我的标准是两个条件都满足：多会话，多雾。已经拆清楚的一串 issue 不需要它，直接 implement；但“要不要为一个每天只有几美元的市场，上一套付费基础设施”这种问题，牵扯调研、开户、成本核算，甚至可能中途改写终点，就值得先建图。
 
 ## 需求阶段：先把模糊需求压成 spec
 
@@ -177,7 +207,19 @@ Claude 当书记员，只查形式不碰结论：working tree 必须干净，Cod
 
 如果验收标准本身有问题，就不要硬判通过或不通过。那是 spec 的 bug，需要回到需求层修正。
 
-实现和验收都是 gpt-5.6-sol，看着像自己判自己。但法官判的不是 Codex 的代码，那份代码 Claude 在 code-review 阶段已经用另一套先验审过了。法官判的是交付的行为满不满足这个 issue，而 issue 是 Claude 写的。所以交叉检查其实是双向的：Claude 审 Codex 的代码，Codex 审 Claude 的 spec。上一节留下的那个洞就是这么堵的，一份从头写歪的 spec，只有没参与过它的人才看得出来。
+实现和验收都是 gpt-5.6-sol，看着像自己判自己。但法官判的不是 Codex 的代码，那份代码 Claude 在 code-review 阶段已经用另一套先验审过了。法官判的是交付的行为满不满足这个 issue，而 issue 是 Claude 写的。所以交叉检查其实是双向的：
+
+```text
+   Claude 的产出：spec / issue / 红测
+        └─►  ②  验收阶段，由 Codex 来审。它没参与过这份 spec
+
+   Codex 的产出：代码 / diff / 交付的行为
+        └─►  ①  code-review 阶段，由 Claude 来审。它没写过这行代码
+
+   谁的产出，都由另一个模型来审。
+```
+
+上一节留下的那个洞就是这么堵的，一份从头写歪的 spec，只有没参与过它的人才看得出来。
 
 真正堵不上的是共享先验：实现者和法官透过同一个模型的眼睛读同一份验收标准。这只在法官必须解释、而不是观察的时候才咬人，所以 accept-issue 里把升档规则写死了。四种情况换 Claude 来判：某条标准没法化成“跑这条命令、看到这个输出”；diff 碰了钱、密钥、权限或者不可逆操作；Codex 上一轮标了 spec bug，或者说标准有歧义；这个 issue 是验收失败后打回来重判的。剩下的情况标准都能机械核验，判案靠证据不靠先验，谁来判就没那么要紧。
 
@@ -222,10 +264,6 @@ agent workflow 不适合所有任务。
 
 代价也很明确。Fable 5 贵，所以它要尽量花在需求和把关上；Codex 的推理档也吃 token，我的取舍是默认 `xhigh`，用一次做对换少返工，spec 钉得够死时再降档省钱。issue 写不好时，流程会不断把问题打回规格层；前几个 issue 的验收报告最好人工认真读，因为那是校准 issue 写法最直接的反馈。
 
-但这正是 agent workflow 的价值：它会让模糊暴露得更早。
+这些代价换来的只有一样东西：模糊暴露得更早。
 
-以前我更容易把失败归因给模型：它没懂、它写偏了、它又偷懒了。跑这套流程以后，很多问题会回到更基础的地方：我有没有把需求讲清楚，有没有把验收标准写到能执行，有没有把项目约定沉淀到 repo 里。
-
-AI 编程最后拼的不只是模型能力，而是你能不能把意图变成规格，把规格变成任务，把任务变成可验证的代码。
-
-agent workflow 只是把这条链路显式化。
+以前我更容易把失败归因给模型，它没懂、它写偏了、它又偷懒了。跑这套流程以后，很多问题会回到更基础的地方：我有没有把需求讲清楚，有没有把验收标准写到能执行，有没有把项目约定沉淀到 repo 里。答案经常是没有。
