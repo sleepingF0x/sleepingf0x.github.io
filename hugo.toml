@@ -19,6 +19,7 @@ enableRobotsTXT = true
 [params]
   env = 'production'
   title = 'Foxden'
+  author = 'sleepingF0x'
   description = '一个同时写技术与生活的个人博客，记录值得在未来反复回看的经验、判断与观察。'
   defaultTheme = 'light'
   disableThemeToggle = true
@@ -28,6 +29,9 @@ enableRobotsTXT = true
   ShowCodeCopyButtons = true
   ShowRssButtonInSectionTermList = true
   ShowToc = true
+
+  [params.schema]
+    publisherType = 'Person'
 
   [params.homeInfoParams]
     Title = 'Foxden'
@@ -40,24 +44,30 @@ enableRobotsTXT = true
 [menu]
   [[menu.main]]
     identifier = 'home'
-    name = 'Home'
+    name = '首页'
     url = '/'
     weight = 10
 
   [[menu.main]]
     identifier = 'tech'
-    name = 'Tech'
+    name = '技术'
     url = '/tech/'
     weight = 20
 
   [[menu.main]]
     identifier = 'life'
-    name = 'Life'
+    name = '生活'
     url = '/life/'
     weight = 30
 
   [[menu.main]]
     identifier = 'about'
-    name = 'About'
+    name = '关于'
     url = '/about/'
     weight = 40
+
+  [[menu.main]]
+    identifier = 'search'
+    name = '搜索'
+    url = '/search/'
+    weight = 50

@@ -4,17 +4,44 @@
 {{ $claudeCodeGuidePage := site.GetPage "/series/claude-code-guide" }}
 <section class="foxden-section foxden-section--tech">
   <header class="foxden-section__hero">
-    <p class="foxden-eyebrow">Section</p>
+    <p class="foxden-eyebrow">技术文章</p>
     <h1 class="foxden-section__title">{{ .Title }}</h1>
     <p class="foxden-section__lede">{{ with .Description }}{{ . }}{{ else }}{{ .Content | plainify }}{{ end }}</p>
   </header>
 
   <div class="foxden-section__grid">
     <section class="foxden-block">
-      <p class="foxden-block__title">Scope</p>
+      <div class="foxden-block__heading">
+        <div>
+          <p class="foxden-block__title">全部文章</p>
+          <p class="foxden-block__note">按更新时间排列，先看问题，再看工具。</p>
+        </div>
+      </div>
+      {{ if $hasPages }}
+      <div class="foxden-list">
+        {{ range $pages }}
+        <a class="foxden-list-card foxden-pressable" href="{{ .RelPermalink }}">
+          <div class="foxden-list-meta">
+            {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
+            {{ range first 1 (.GetTerms "series") }}<span>{{ .LinkTitle }}</span>{{ end }}
+            <span>{{ .ReadingTime }} 分钟</span>
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</p>
+          <span class="foxden-list-card__arrow" aria-hidden="true">→</span>
+        </a>
+        {{ end }}
+      </div>
+      {{ else }}
+      <p class="foxden-block__copy">这里会逐步整理出文章、专题、工作流笔记与更长期的方法总结。</p>
+      {{ end }}
+    </section>
+
+    <section class="foxden-block">
+      <p class="foxden-block__title">专题与范围</p>
       <p class="foxden-block__copy">这里不会只围绕某几个工具展开。凡是和构建、理解、调试、协作、自动化、系统设计、工程判断有关的内容，都可以进入 Tech。</p>
       <div class="foxden-series-list">
-        <p class="foxden-series-list__title">Series</p>
+        <p class="foxden-series-list__title">持续更新的专题</p>
         {{ if $claudeCodeGuidePage }}
         <a class="foxden-series-card foxden-pressable" href="{{ $claudeCodeGuidePage.RelPermalink }}">
           <div class="foxden-series-card__meta">
@@ -35,26 +62,6 @@
         </div>
         {{ end }}
       </div>
-    </section>
-
-    <section class="foxden-block">
-      <p class="foxden-block__title">Latest</p>
-      {{ if $hasPages }}
-      <div class="foxden-list">
-        {{ range $pages }}
-        <a class="foxden-list-card foxden-pressable" href="{{ .RelPermalink }}">
-          <div class="foxden-list-meta">
-            {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
-            {{ range first 1 (.GetTerms "series") }}<span>{{ .LinkTitle }}</span>{{ end }}
-          </div>
-          <h3>{{ .Title }}</h3>
-          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</p>
-        </a>
-        {{ end }}
-      </div>
-      {{ else }}
-      <p class="foxden-block__copy">这里会逐步整理出文章、专题、工作流笔记与更长期的方法总结。技术内容不会只写“用了什么”，也会写“为什么这样判断”和“最后留下了什么”。</p>
-      {{ end }}
     </section>
   </div>
 </section>
