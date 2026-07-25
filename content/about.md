@@ -1,6 +1,8 @@
 ---
 title: "About"
 description: "关于 sleepingF0x，以及为什么会开始写这个同时承载技术与生活的个人博客。"
+kicker: "个人介绍"
+ShowReadingTime: false
 ---
 
 Foxden 是我用来记录技术、生活和长期经验沉淀的地方。

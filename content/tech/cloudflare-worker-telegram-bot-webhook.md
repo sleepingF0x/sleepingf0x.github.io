@@ -2,6 +2,8 @@
 title: "用 Cloudflare Worker 搭一个轻量 Webhook Gateway"
 date: 2026-05-23T00:00:00+08:00
 draft: false
+featured: true
+featuredWeight: 2
 description: "记录一个 Cloudflare-native webhook gateway 应该具备的完整能力：多入口、多通道、队列重试、事件历史、安全边界和 Telegram 管理入口。"
 tags: ["Cloudflare Worker", "Telegram Bot", "Webhook", "Serverless", "ntfy"]
 ---

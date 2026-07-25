@@ -1,84 +1,111 @@
 {{ define "main" }}
-{{ $techPages := where site.RegularPages "Section" "tech" }}
-{{ $lifePages := where site.RegularPages "Section" "life" }}
 {{ $contentPages := where site.RegularPages "Section" "in" (slice "tech" "life") }}
 {{ $latest := first 4 ($contentPages.ByDate.Reverse) }}
-{{ $hasLatest := gt (len $latest) 0 }}
-{{ $claudeCodeGuidePage := site.GetPage "/series/claude-code-guide" }}
+{{ $selected := first 3 (sort (where site.RegularPages "Params.featured" true) "Params.featuredWeight" "asc") }}
+
 <section class="foxden-home">
   <header class="foxden-home__hero">
-    <p class="foxden-eyebrow">Foxden</p>
-    <h1 class="foxden-home__title">把会留下来的经验、判断与观察写下来。</h1>
-    <p class="foxden-home__lede">这是一个同时写技术与生活的个人博客。这里不追求把一切都写全，而是更在意哪些内容在一段时间以后，依然值得被重新读一遍。</p>
+    <div class="foxden-home__intro">
+      <p class="foxden-eyebrow">sleepingF0x · Foxden</p>
+      <h1 class="foxden-home__title">写下 AI Coding、工程实践与长期判断。</h1>
+      <p class="foxden-home__lede">这里记录 Agent 工作流、自动化与系统设计，也保留技术之外仍值得回看的生活观察。</p>
+      <nav class="foxden-home__actions" aria-label="快速入口">
+        <a class="foxden-action foxden-pressable" href="#selected">查看精选内容 <span aria-hidden="true">↘</span></a>
+        <a class="foxden-action foxden-pressable" href="https://github.com/sleepingF0x" rel="me">GitHub <span aria-hidden="true">↗</span></a>
+        <a class="foxden-action foxden-pressable" href="{{ "/about/" | relURL }}">关于我 <span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+
+    <dl class="foxden-home__profile" aria-label="内容方向">
+      <div>
+        <dt>Focus</dt>
+        <dd>AI Coding · Agent Workflow</dd>
+      </div>
+      <div>
+        <dt>Practice</dt>
+        <dd>Automation · System Design</dd>
+      </div>
+      <div>
+        <dt>Writing</dt>
+        <dd>Tech · Life</dd>
+      </div>
+    </dl>
   </header>
 
   <div class="foxden-home__grid">
-    <section class="foxden-block">
-      <p class="foxden-block__title">Why write</p>
-      <p class="foxden-block__copy">有些东西在刚发生时只是零碎感受，但过一段时间回头看，它们会慢慢变成方法、判断，或者一种更稳定的做事方式。我想留下的，是这种能反复回看、也能逐渐沉淀下来的内容。</p>
-    </section>
-
-    <section class="foxden-block">
-      <p class="foxden-block__title">Tech</p>
-      <p class="foxden-block__copy">这里写工具、系统、工程实践、自动化、问题分析，也可以写那些最终改变我理解技术方式的经验与方法。</p>
-      <div class="foxden-series-list">
-        <p class="foxden-series-list__title">Series</p>
-        {{ if $claudeCodeGuidePage }}
-        <a class="foxden-series-card foxden-pressable" href="{{ $claudeCodeGuidePage.RelPermalink }}">
-          <div class="foxden-series-card__meta">
-            <span class="foxden-series-card__index">01</span>
-            <span class="foxden-series-card__status">持续更新</span>
-          </div>
-          <h2 class="foxden-series-card__name">Claude-Code-Guide</h2>
-          <p class="foxden-series-card__desc">围绕 Claude Code 的使用经验、工作流、常用 skills 与实践判断。</p>
-        </a>
-        {{ else }}
-        <div class="foxden-series-card">
-          <div class="foxden-series-card__meta">
-            <span class="foxden-series-card__index">01</span>
-            <span class="foxden-series-card__status">持续更新</span>
-          </div>
-          <h2 class="foxden-series-card__name">Claude-Code-Guide</h2>
-          <p class="foxden-series-card__desc">围绕 Claude Code 的使用经验、工作流、常用 skills 与实践判断。</p>
+    {{ if gt (len $selected) 0 }}
+    <section class="foxden-block foxden-block--selected" id="selected">
+      <div class="foxden-block__heading">
+        <div>
+          <p class="foxden-block__title">精选内容</p>
+          <p class="foxden-block__note">先从这几篇开始，快速了解这里关心的问题与做事方式。</p>
         </div>
+        <a class="foxden-inline-link foxden-pressable" href="{{ "/tech/" | relURL }}">浏览全部技术文章</a>
+      </div>
+
+      <div class="foxden-selected">
+        {{ range $index, $page := $selected }}
+        <a class="foxden-selected__item foxden-pressable" href="{{ $page.RelPermalink }}">
+          <span class="foxden-selected__index">{{ printf "%02d" (add $index 1) }}</span>
+          <span class="foxden-selected__content">
+            <span class="foxden-selected__meta">
+              {{ range first 2 ($page.GetTerms "tags") }}<span>{{ .LinkTitle }}</span>{{ end }}
+              <span>{{ $page.ReadingTime }} 分钟</span>
+            </span>
+            <strong>{{ $page.Title }}</strong>
+            <span class="foxden-selected__desc">{{ with $page.Description }}{{ . }}{{ else }}{{ $page.Summary | plainify | htmlUnescape }}{{ end }}</span>
+          </span>
+          <span class="foxden-selected__arrow" aria-hidden="true">↗</span>
+        </a>
         {{ end }}
       </div>
-      {{ if eq (len $techPages) 0 }}
-      <p class="foxden-block__copy"><a class="foxden-inline-link foxden-pressable" href="{{ "/tech/" | relURL }}">先去 Tech 看看这个栏目会写什么</a>。</p>
-      {{ end }}
     </section>
+    {{ end }}
 
     <section class="foxden-block">
-      <p class="foxden-block__title">Life</p>
-      <p class="foxden-block__copy">这里会留下生活里的观察、阶段性的变化、日常经验，以及那些不属于技术、却同样会在以后留下痕迹的内容。</p>
-      {{ if eq (len $lifePages) 0 }}
-      <p class="foxden-block__copy"><a class="foxden-inline-link foxden-pressable" href="{{ "/life/" | relURL }}">去 Life 看看这部分会往哪里长</a>。</p>
-      {{ end }}
-    </section>
-
-    <section class="foxden-block">
-      <p class="foxden-block__title">Latest</p>
-      {{ if $hasLatest }}
+      <div class="foxden-block__heading">
+        <div>
+          <p class="foxden-block__title">最近更新</p>
+          <p class="foxden-block__note">技术实践与生活观察，按时间持续记录。</p>
+        </div>
+      </div>
+      {{ if gt (len $latest) 0 }}
       <div class="foxden-list">
         {{ range $latest }}
         <a class="foxden-list-card foxden-pressable" href="{{ .RelPermalink }}">
           <div class="foxden-list-meta">
             {{ if not .Date.IsZero }}<span>{{ .Date | time.Format "2006-01-02" }}</span>{{ end }}
             {{ with .CurrentSection }}<span>{{ .Title }}</span>{{ end }}
+            <span>{{ .ReadingTime }} 分钟</span>
           </div>
           <h3>{{ .Title }}</h3>
           <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</p>
+          <span class="foxden-list-card__arrow" aria-hidden="true">→</span>
         </a>
         {{ end }}
       </div>
-      {{ else }}
-      <p class="foxden-block__copy">现在文章还不多，但站点的两条主线已经明确：一条继续写技术，一条慢慢写生活。后面的内容会沿着这两个方向自然长出来。</p>
       {{ end }}
     </section>
 
-    <section class="foxden-block">
-      <p class="foxden-block__title">About</p>
-      <p class="foxden-block__copy">如果你想知道这个站点背后是谁、为什么会开始写这些内容，可以去 <a class="foxden-inline-link foxden-pressable" href="{{ "/about/" | relURL }}">About</a> 看看。</p>
+    <div class="foxden-home__channels">
+      <section class="foxden-block">
+        <p class="foxden-block__title">技术</p>
+        <h2 class="foxden-channel__title">从工具走向方法</h2>
+        <p class="foxden-block__copy">记录构建、调试、自动化、系统设计，以及那些最后会沉淀成工程判断的实践。</p>
+        <a class="foxden-inline-link foxden-pressable" href="{{ "/tech/" | relURL }}">进入技术栏目</a>
+      </section>
+
+      <section class="foxden-block">
+        <p class="foxden-block__title">生活</p>
+        <h2 class="foxden-channel__title">留下技术之外的观察</h2>
+        <p class="foxden-block__copy">记录阶段性的变化、兴趣与日常经验，让这个站点不只剩下工具和流程。</p>
+        <a class="foxden-inline-link foxden-pressable" href="{{ "/life/" | relURL }}">进入生活栏目</a>
+      </section>
+    </div>
+
+    <section class="foxden-block foxden-home__why">
+      <p class="foxden-block__title">为什么写</p>
+      <p class="foxden-block__copy">有些零碎感受只有经过时间，才会慢慢变成方法、判断，或者一种更稳定的做事方式。写下来，是为了让它们能够被重新验证，也能够继续生长。</p>
     </section>
   </div>
 </section>

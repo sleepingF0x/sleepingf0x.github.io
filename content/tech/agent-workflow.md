@@ -3,6 +3,8 @@ title: "agent workflow：把 AI 编程从对话变成流程"
 date: 2026-07-05T00:00:00+08:00
 lastmod: 2026-07-12T00:00:00+08:00
 draft: false
+featured: true
+featuredWeight: 1
 description: "介绍一套双模型 spec-driven 开发工作流：Claude 管需求、复审和流程把关，Codex（gpt-5.6-sol）管实现和验收判定，用 GitHub Issues 和落盘文档交接，推理档位按 spec 确定性选；一个会话装不下的活先用 wayfinder 在 tracker 上建图。"
 tags: ["Claude Code", "Codex", "AI Coding", "Workflow", "Spec"]
 series: ["Claude-Code-Guide"]
