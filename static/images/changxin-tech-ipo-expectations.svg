@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">长鑫科技首日涨幅预期、历史可比与本文落点</title>
+  <desc id="desc">卖方中性预期为加百分之二百四十至四百二十，Hyperliquid 盘前报价约加百分之四百九十九，历史百亿级 IPO 多数低于加百分之二百零二，本文落点为加百分之七十三至二百四十五。</desc>
+  <rect width="1200" height="650" fill="#ffffff"/>
+  <rect x="1" y="1" width="1198" height="648" fill="none" stroke="#e2e4ea" stroke-width="2"/>
+
+  <g font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'PingFang SC', 'Microsoft YaHei', monospace">
+    <g font-size="17" fill="#858c9b" letter-spacing="1.5">
+      <text x="70" y="55">卖方情形</text>
+      <text x="70" y="169">离岸投机盘</text>
+      <text x="70" y="283">历史可比：百亿级 IPO 实际首日收盘涨幅</text>
+      <text x="70" y="420">本文落点</text>
+    </g>
+
+    <g stroke="#c9cdd7" stroke-width="1.5" stroke-dasharray="6 7">
+      <line x1="70" y1="100" x2="1130" y2="100"/>
+      <line x1="70" y1="214" x2="1130" y2="214"/>
+      <line x1="70" y1="328" x2="1130" y2="328"/>
+      <line x1="70" y1="465" x2="1130" y2="465"/>
+    </g>
+
+    <g fill="#c33a32">
+      <rect x="266" y="86" width="49" height="24" opacity=".45"/>
+      <rect x="543" y="86" width="294" height="24"/>
+      <rect x="934" y="86" width="147" height="24" opacity=".45"/>
+      <circle cx="966" cy="214" r="7"/>
+    </g>
+    <g fill="#c33a32" font-size="16">
+      <text x="290" y="75" text-anchor="middle">保守</text>
+      <text x="690" y="75" text-anchor="middle">中性 +240~420%</text>
+      <text x="1007" y="75" text-anchor="middle">较乐观</text>
+      <text x="966" y="196" text-anchor="middle">HL pre-IPO ≈ +499%</text>
+    </g>
+
+    <g fill="#2c7357">
+      <circle cx="125" cy="328" r="7"/>
+      <circle cx="155" cy="328" r="7"/>
+      <circle cx="169" cy="328" r="7"/>
+      <circle cx="258" cy="328" r="7"/>
+      <circle cx="261" cy="328" r="7"/>
+      <circle cx="331" cy="328" r="7"/>
+      <circle cx="481" cy="328" r="7"/>
+    </g>
+    <g fill="#4a5160" font-size="14">
+      <text transform="translate(125 311) rotate(-42)" text-anchor="start">百济 −16%</text>
+      <text transform="translate(155 311) rotate(-42)" text-anchor="start">华虹 +2%</text>
+      <text transform="translate(169 311) rotate(-42)" text-anchor="start">中芯集成 +11%</text>
+      <text transform="translate(258 311) rotate(-42)" text-anchor="start">联影 +65%</text>
+      <text transform="translate(261 311) rotate(-42)" text-anchor="start">海光 +67%</text>
+      <text transform="translate(331 311) rotate(-42)" text-anchor="start">通号 +110%</text>
+      <text transform="translate(481 311) rotate(-42)" text-anchor="start">中芯国际 +202%</text>
+    </g>
+
+    <rect x="270" y="451" width="281" height="24" fill="#1d2430"/>
+    <text x="410" y="440" fill="#1d2430" font-size="16" text-anchor="middle">+73% ~ +245%</text>
+
+    <line x1="70" y1="518" x2="1130" y2="518" stroke="#c9cdd7" stroke-width="1.5"/>
+    <g stroke="#c9cdd7" stroke-width="1.5">
+      <line x1="152" y1="518" x2="152" y2="530"/>
+      <line x1="315" y1="518" x2="315" y2="530"/>
+      <line x1="478" y1="518" x2="478" y2="530"/>
+      <line x1="640" y1="518" x2="640" y2="530"/>
+      <line x1="804" y1="518" x2="804" y2="530"/>
+      <line x1="967" y1="518" x2="967" y2="530"/>
+    </g>
+    <g fill="#15171c" font-size="16" text-anchor="middle">
+      <text x="152" y="551">0%</text>
+      <text x="315" y="551">+100%</text>
+      <text x="478" y="551">+200%</text>
+      <text x="640" y="551">+300%</text>
+      <text x="804" y="551">+400%</text>
+      <text x="967" y="551">+500%</text>
+    </g>
+    <g fill="#858c9b" font-size="13" text-anchor="middle">
+      <text x="152" y="574">8.66 元</text>
+      <text x="315" y="574">17.3 元 · 1.16 万亿</text>
+      <text x="478" y="574">26.0 元 · 1.74 万亿</text>
+      <text x="640" y="574">34.6 元 · 2.32 万亿</text>
+      <text x="804" y="574">43.3 元 · 2.90 万亿</text>
+      <text x="967" y="574">52.0 元 · 3.47 万亿</text>
+    </g>
+
+    <g font-size="14" fill="#4a5160">
+      <rect x="70" y="606" width="14" height="14" fill="#c33a32"/>
+      <text x="94" y="618">预期</text>
+      <circle cx="200" cy="613" r="7" fill="#2c7357"/>
+      <text x="216" y="618">已实现的历史可比</text>
+      <rect x="414" y="606" width="14" height="14" fill="#1d2430"/>
+      <text x="438" y="618">本文落点</text>
+    </g>
+  </g>
+</svg>

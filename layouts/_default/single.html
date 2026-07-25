@@ -1,8 +1,9 @@
 {{ define "main" }}
 {{ $sectionName := cond (ne .Section "") (humanize .Section) "Page" }}
+{{ $eyebrow := .Params.kicker | default $sectionName }}
 <article class="foxden-single">
   <header class="foxden-single__header">
-    <p class="foxden-single__eyebrow">{{ $sectionName }}</p>
+    <p class="foxden-single__eyebrow">{{ $eyebrow }}</p>
     <h1 class="post-title">{{ .Title }}</h1>
     {{ with .Description }}
     <p class="foxden-single__lede">{{ . }}</p>
