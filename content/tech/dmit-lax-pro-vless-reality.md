@@ -20,6 +20,10 @@ DMIT 的产品分成三类：Premium，也就是大家常说的 Pro；Eyeball，
 
 这类机器卖得贵，钱主要花在线路上。要是只跑定时任务、离线下载或者面向海外用户的小网站，便宜的 Tier 1 机器更合适。我的流量需要每天从国内进来，线路稳定比多两核 CPU 更有用。
 
+下面是这台机器跑 Bench、回程路由、IP 和国内延迟测试时的结果：
+
+[![DMIT LAX Pro 的 Bench、回程路由、IP 和国内延迟测试结果](/images/tech/dmit-lax-pro-test-results.png)](/images/tech/dmit-lax-pro-test-results.png)
+
 ## 入口用的是 VLESS + TCP + REALITY + Vision
 
 代理入口跑在 Xray 上，客户端协议是：
